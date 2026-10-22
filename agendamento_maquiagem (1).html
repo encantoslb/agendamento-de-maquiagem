@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agendamento de Maquiagem</title>
+
+<style>
+:root {
+    --wine: #74384c;
+    --rose: #d78ca1;
+    --pale: #fff3f6;
+    --ink: #49383d;
+    --line: #ead3db;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--pale);
+    color: var(--ink);
+    font-family: Arial, sans-serif;
+}
+
+header {
+    padding: 42px 18px;
+    text-align: center;
+    color: white;
+    background: linear-gradient(135deg, var(--wine), var(--rose));
+}
+
+header h1 {
+    font-family: Georgia, serif;
+    font-size: 34px;
+    margin: 0 0 10px;
+}
+
+header p {
+    line-height: 1.6;
+    margin: 0;
+}
+
+main {
+    max-width: 760px;
+    margin: 26px auto;
+    padding: 0 14px;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 22px #74384c12;
+}
+
+h2 {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    color: var(--wine);
+    margin: 0 0 18px;
+}
+
+.service {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.service:last-child {
+    border: 0;
+}
+
+.service h3 {
+    margin: 0 0 7px;
+    color: var(--wine);
+}
+
+.service p {
+    margin: 5px 0;
+    line-height: 1.45;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--rose);
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    color: var(--wine);
+    margin: 15px 0 7px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d9bdc7;
+    border-radius: 9px;
+    font-size: 16px;
+    background: white;
+    color: var(--ink);
+}
+
+button,
+.button {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background: var(--wine);
+    color: white;
+    padding: 15px;
+    margin-top: 18px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover,
+.button:hover {
+    background: var(--rose);
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: wait;
+}
+
+.notice {
+    padding: 12px;
+    background: #fff0f4;
+    border-radius: 9px;
+    font-size: 13px;
+    line-height: 1.55;
+    margin-top: 15px;
+}
+
+.status {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-top: 12px;
+    white-space: pre-wrap;
+}
+
+footer {
+    text-align: center;
+    padding: 22px;
+    color: var(--wine);
+    font-size: 13px;
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 28px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Agende sua Maquiagem</h1>
+    <p>
+        Um momento especial para realçar a sua beleza ✨
+    </p>
+</header>
+
+<main>
+
+    <section class="card">
+        <h2>Serviços</h2>
+
+        <div class="service">
+            <h3>Maquiagem simples</h3>
+            <p>
+                Produção delicada para realçar sua beleza natural.
+            </p>
+            <p><b>Duração:</b> 1 hora</p>
+            <div class="price">R$ 99,00</div>
+        </div>
+
+        <div class="service">
+            <h3>Maquiagem social</h3>
+            <p>
+                Ideal para festas, encontros e ocasiões especiais.
+            </p>
+            <p><b>Duração:</b> 1 hora e 30 minutos</p>
+            <div class="price">R$ 150,00</div>
+        </div>
+
+        <div class="service">
+            <h3>Maquiagem para festas</h3>
+            <p>
+                Uma produção marcante para o seu evento.
+            </p>
+            <p><b>Duração:</b> 2 horas</p>
+            <div class="price">R$ 220,00</div>
+        </div>
+
+        <div class="service">
+            <h3>Maquiagem artística</h3>
+            <p>
+                Produções criativas e personalizadas.
+            </p>
+            <p><b>Duração:</b> 3 horas</p>
+            <div class="price">A partir de R$ 370,00</div>
+        </div>
+
+        <p class="notice">
+            Os valores e as durações são editáveis.
+            Ajuste-os antes de publicar, se necessário.
+        </p>
+    </section>
+
+
+    <section class="card">
+        <h2>Solicitar agendamento</h2>
+
+        <form id="bookingForm">
+
+            <label for="name">Nome completo *</label>
+            <input
+                id="name"
+                type="text"
+                required
+                autocomplete="name"
+                placeholder="Digite seu nome completo"
+            >
+
+            <label for="phone">Seu WhatsApp *</label>
+            <input
+                id="phone"
+                type="tel"
+                required
+                placeholder="DDD + número"
+                autocomplete="tel"
+            >
+
+            <label for="service">Procedimento *</label>
+
+            <select id="service" required>
+                <option value="">Selecione um procedimento</option>
+
+                <option value="simple">
+                    Maquiagem simples — R$ 99,00
+                </option>
+
+                <option value="social">
+                    Maquiagem social — R$ 150,00
+                </option>
+
+                <option value="party">
+                    Maquiagem para festas — R$ 220,00
+                </option>
+
+                <option value="artistic">
+                    Maquiagem artística — a partir de R$ 370,00
+                </option>
+            </select>
+
+            <label for="date">Data desejada *</label>
+            <input
+                id="date"
+                type="date"
+                required
+            >
+
+            <label for="time">Horário de início *</label>
+
+            <select id="time" required>
+                <option value="">
+                    Escolha a data primeiro
+                </option>
+            </select>
+
+            <label for="notes">Observações (opcional)</label>
+
+            <textarea
+                id="notes"
+                rows="3"
+                placeholder="Conte como gostaria da sua maquiagem"
+            ></textarea>
+
+            <button id="submitBtn" type="submit">
+                Verificar disponibilidade e solicitar
+            </button>
+
+            <div
+                id="status"
+                class="status"
+                role="status"
+            ></div>
+
+        </form>
+
+        <p class="notice">
+            Importante: para bloquear o mesmo horário em todos os celulares
+            e enviar e-mails automaticamente, configure o Firebase e o
+            EmailJS na seção de configuração deste arquivo.
+
+            O envio automático de mensagens pelo WhatsApp comercial exige
+            a API oficial do WhatsApp Business e um servidor.
+        </p>
+    </section>
+
+
+    <section class="card">
+        <h2>Fale comigo</h2>
+
+        <p>
+            Se tiver dúvidas, fale diretamente pelo WhatsApp.
+        </p>
+
+        <a
+            class="button"
+            href="https://wa.me/5516992044420"
+            target="_blank"
+            rel="noopener"
+        >
+            Abrir WhatsApp
+        </a>
+    </section>
+
+</main>
+
+<footer>
+    Feito com carinho para realçar sua beleza 💗
+</footer>
+
+
+<!--
+==========================================================
+CONFIGURAÇÃO NECESSÁRIA PARA O AGENDAMENTO AUTOMÁTICO
+
+1. Crie um projeto no Firebase:
+   https://console.firebase.google.com/
+
+2. Ative o Firestore Database.
+
+3. Crie uma coleção chamada "bookings".
+
+4. Cole a configuração web do Firebase no objeto
+   firebaseConfig abaixo.
+
+5. Configure as regras de segurança do banco de dados.
+   Para uso em produção, implemente autenticação e validação
+   segura no servidor ou em Cloud Functions.
+
+6. Crie uma conta no EmailJS:
+   https://www.emailjs.com/
+
+7. Crie um serviço de e-mail e um template com os campos:
+   name, phone, service, date, time, duration e notes.
+
+8. Configure o template para enviar para:
+   encantoslb5@gmail.com
+
+9. Para notificações automáticas pelo WhatsApp, configure
+   a API oficial do WhatsApp Business em um backend seguro.
+   Não coloque tokens secretos neste arquivo HTML.
+==========================================================
+-->
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    query,
+    where,
+    Timestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/*
+    CONFIGURAÇÃO DO FIREBASE
+
+    Substitua os valores de exemplo pelos dados reais
+    do seu projeto Firebase.
+*/
+
+const firebaseConfig = {
+    apiKey: "COLE_SUA_API_KEY",
+    authDomain: "COLE_SEU_PROJETO.firebaseapp.com",
+    projectId: "COLE_SEU_PROJECT_ID",
+    storageBucket: "COLE_SEU_BUCKET",
+    messagingSenderId: "COLE_SEU_SENDER_ID",
+    appId: "COLE_SEU_APP_ID"
+};
+
+
+/*
+    CONFIGURAÇÃO DO EMAILJS
+
+    Preencha os três campos após configurar sua conta.
+*/
+
+const EMAILJS_PUBLIC_KEY = "COLE_SUA_PUBLIC_KEY";
+
+const EMAILJS_SERVICE_ID = "COLE_SEU_SERVICE_ID";
+
+const EMAILJS_TEMPLATE_ID = "COLE_SEU_TEMPLATE_ID";
+
+const EMAIL_DESTINO = "encantoslb5@gmail.com";
+
+const WHATSAPP_PROFISSIONAL = "5516992044420";
+
+
+/*
+    PROCEDIMENTOS E DURAÇÕES
+
+    Os valores e os tempos abaixo são exemplos editáveis.
+*/
+
+const services = {
+
+    simple: {
+        name: "Maquiagem simples",
+        price: "R$ 99,00",
+        duration: 60
+    },
+
+    social: {
+        name: "Maquiagem social",
+        price: "R$ 150,00",
+        duration: 90
+    },
+
+    party: {
+        name: "Maquiagem para festas",
+        price: "R$ 220,00",
+        duration: 120
+    },
+
+    artistic: {
+        name: "Maquiagem artística",
+        price: "A partir de R$ 370,00",
+        duration: 180
+    }
+
+};
+
+
+const form = document.getElementById("bookingForm");
+
+const dateEl = document.getElementById("date");
+
+const timeEl = document.getElementById("time");
+
+const serviceEl = document.getElementById("service");
+
+const statusEl = document.getElementById("status");
+
+const submitBtn = document.getElementById("submitBtn");
+
+
+/*
+    Impede selecionar datas anteriores a hoje.
+*/
+
+const now = new Date();
+
+dateEl.min =
+    `${now.getFullYear()}-` +
+    `${String(now.getMonth() + 1).padStart(2, "0")}-` +
+    `${String(now.getDate()).padStart(2, "0")}`;
+
+
+let db = null;
+
+let firebaseReady = false;
+
+
+/*
+    Inicializa o Firebase quando a configuração real
+    tiver sido preenchida.
+*/
+
+try {
+
+    if (
+        firebaseConfig.apiKey !== "COLE_SUA_API_KEY" &&
+        firebaseConfig.projectId !== "COLE_SEU_PROJECT_ID"
+    ) {
+
+        const app = initializeApp(firebaseConfig);
+
+        db = getFirestore(app);
+
+        firebaseReady = true;
+
+    }
+
+} catch (error) {
+
+    console.error("Erro ao inicializar Firebase:", error);
+
+}
+
+
+/*
+    Verifica se o EmailJS foi configurado.
+*/
+
+function configuredEmailJS() {
+
+    return (
+        EMAILJS_PUBLIC_KEY !== "COLE_SUA_PUBLIC_KEY" &&
+        EMAILJS_SERVICE_ID !== "COLE_SEU_SERVICE_ID" &&
+        EMAILJS_TEMPLATE_ID !== "COLE_SEU_TEMPLATE_ID"
+    );
+
+}
+
+
+/*
+    Converte um horário HH:MM em minutos.
+*/
+
+function toMinutes(time) {
+
+    const [hours, minutes] = time.split(":").map(Number);
+
+    return hours * 60 + minutes;
+
+}
+
+
+/*
+    Verifica se dois procedimentos ocupam horários
+    que se sobrepõem.
+*/
+
+function rangesOverlap(aStart, aEnd, bStart, bEnd) {
+
+    return aStart < bEnd && bStart < aEnd;
+
+}
+
+
+/*
+    Busca os agendamentos registrados para determinada data.
+*/
+
+async function getDayBookings(date) {
+
+    if (!firebaseReady) {
+        return null;
+    }
+
+    const bookingsQuery = query(
+        collection(db, "bookings"),
+        where("date", "==", date)
+    );
+
+    const snapshot = await getDocs(bookingsQuery);
+
+    return snapshot.docs
+        .map(document => document.data())
+        .filter(booking => booking.status !== "cancelled");
+
+}
+
+
+/*
+    Atualiza a lista de horários disponíveis.
+
+    Expediente demonstrativo:
+    das 08h às 18h, com inícios a cada 30 minutos.
+
+    Um procedimento ocupa todo o período correspondente
+    à sua duração.
+*/
+
+async function refreshTimes() {
+
+    const date = dateEl.value;
+
+    const selectedService = services[serviceEl.value];
+
+    timeEl.innerHTML = "";
+
+    if (!date || !selectedService) {
+
+        timeEl.innerHTML =
+            '<option value="">Escolha a data e o procedimento primeiro</option>';
+
+        return;
+
+    }
+
+    const bookings = await getDayBookings(date);
+
+    const firstOption = document.createElement("option");
+
+    firstOption.value = "";
+
+    firstOption.textContent =
+        bookings === null
+            ? "Configure o sistema para verificar horários"
+            : "Selecione um horário disponível";
+
+    timeEl.appendChild(firstOption);
+
+    if (bookings === null) {
+        return;
+    }
+
+    for (
+        let start = 8 * 60;
+        start + selectedService.duration <= 18 * 60;
+        start += 30
+    ) {
+
+        const end = start + selectedService.duration;
+
+        const overlaps = bookings.some(booking => {
+
+            const bookingStart = toMinutes(booking.startTime);
+
+            const bookingEnd =
+                bookingStart + Number(booking.duration);
+
+            return rangesOverlap(
+                start,
+                end,
+                bookingStart,
+                bookingEnd
+            );
+
+        });
+
+        const hour = String(
+            Math.floor(start / 60)
+        ).padStart(2, "0");
+
+        const minute = String(
+            start % 60
+        ).padStart(2, "0");
+
+        const time = `${hour}:${minute}`;
+
+        const selectedDateTime = new Date(
+            `${date}T${time}:00`
+        );
+
+        const isPast = selectedDateTime <= new Date();
+
+        if (!overlaps && !isPast) {
+
+            const option = document.createElement("option");
+
+            option.value = time;
+
+            option.textContent = time;
+
+            timeEl.appendChild(option);
+
+        }
+
+    }
+
+    if (timeEl.options.length === 1) {
+
+        timeEl.innerHTML =
+            '<option value="">Não há horários livres para este procedimento nessa data</option>';
+
+    }
+
+}
+
+
+/*
+    Atualiza os horários quando a cliente muda a data
+    ou o procedimento.
+*/
+
+dateEl.addEventListener("change", refreshTimes);
+
+serviceEl.addEventListener("change", refreshTimes);
+
+
+/*
+    Envia a notificação por e-mail utilizando EmailJS.
+*/
+
+async function sendEmail(data) {
+
+    if (!configuredEmailJS()) {
+        return false;
+    }
+
+    if (!window.emailjs) {
+
+        await new Promise((resolve, reject) => {
+
+            const script = document.createElement("script");
+
+            script.src =
+                "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
+
+            script.onload = resolve;
+
+            script.onerror = reject;
+
+            document.head.appendChild(script);
+
+        });
+
+        window.emailjs.init({
+            publicKey: EMAILJS_PUBLIC_KEY
+        });
+
+    }
+
+    await window.emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+            to_email: EMAIL_DESTINO,
+            name: data.name,
+            phone: data.phone,
+            service: data.service,
+            date: data.date,
+            time: data.startTime,
+            duration: data.duration,
+            notes: data.notes || "Nenhuma"
+        }
+    );
+
+    return true;
+
+}
+
+
+/*
+    Processa a solicitação de agendamento.
+*/
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    statusEl.textContent = "";
+
+    /*
+        Sem Firebase, o formulário não consegue consultar
+        nem bloquear horários compartilhados.
+    */
+
+    if (!firebaseReady) {
+
+        statusEl.textContent =
+            "O site ainda não está conectado ao banco de dados. " +
+            "Preencha a configuração do Firebase no código para " +
+            "ativar a verificação dos horários em todos os celulares.";
+
+        return;
+
+    }
+
+    const selectedService = services[serviceEl.value];
+
+    if (!selectedService) {
+        return;
+    }
+
+    const data = {
+
+        name: document.getElementById("name").value.trim(),
+
+        phone: document.getElementById("phone").value.trim(),
+
+        service: selectedService.name,
+
+        serviceKey: serviceEl.value,
+
+        date: dateEl.value,
+
+        startTime: timeEl.value,
+
+        duration: selectedService.duration,
+
+        notes: document.getElementById("notes").value.trim(),
+
+        status: "pending",
+
+        createdAt: Timestamp.now()
+
+    };
+
+
+    if (!data.startTime) {
+
+        statusEl.textContent =
+            "Escolha um horário disponível.";
+
+        return;
+
+    }
+
+
+    submitBtn.disabled = true;
+
+    submitBtn.textContent = "Verificando disponibilidade...";
+
+
+    try {
+
+        /*
+            Faz uma nova consulta antes de registrar
+            a solicitação para reduzir conflitos.
+        */
+
+        const existingBookings = await getDayBookings(data.date);
+
+        const start = toMinutes(data.startTime);
+
+        const conflict = existingBookings.some(booking => {
+
+            const bookingStart = toMinutes(booking.startTime);
+
+            const bookingEnd =
+                bookingStart + Number(booking.duration);
+
+            return rangesOverlap(
+                start,
+                start + data.duration,
+                bookingStart,
+                bookingEnd
+            );
+
+        });
+
+
+        if (conflict) {
+
+            statusEl.textContent =
+                "Esse horário acabou de ser ocupado. Escolha outro, por favor.";
+
+            await refreshTimes();
+
+            return;
+
+        }
+
+
+        /*
+            Registra a solicitação no banco de dados.
+        */
+
+        await addDoc(
+            collection(db, "bookings"),
+            data
+        );
+
+
+        /*
+            Tenta enviar o e-mail.
+        */
+
+        let emailSent = false;
+
+        try {
+
+            emailSent = await sendEmail(data);
+
+        } catch (error) {
+
+            console.error("Falha no envio do e-mail:", error);
+
+        }
+
+
+        /*
+            Prepara a mensagem para o WhatsApp.
+        */
+
+        const [year, month, day] = data.date.split("-");
+
+        const message =
+            `Olá! Recebi uma solicitação de agendamento pelo site.\n\n` +
+            `Nome: ${data.name}\n` +
+            `WhatsApp: ${data.phone}\n` +
+            `Procedimento: ${data.service}\n` +
+            `Data: ${day}/${month}/${year}\n` +
+            `Horário: ${data.startTime}\n` +
+            `Duração: ${data.duration} minutos\n` +
+            `Observações: ${data.notes || "Nenhuma"}\n\n` +
+            `Status: aguardando confirmação.`;
+
+
+        const whatsappURL =
+            `https://wa.me/${WHATSAPP_PROFISSIONAL}` +
+            `?text=${encodeURIComponent(message)}`;
+
+
+        statusEl.textContent =
+            "Solicitação registrada. " +
+            (
+                emailSent
+                    ? "E-mail enviado. "
+                    : "O e-mail automático ainda não está configurado ou ocorreu um erro. "
+            ) +
+            "Abrindo o WhatsApp para enviar a solicitação à profissional.";
+
+
+        window.open(
+            whatsappURL,
+            "_blank",
+            "noopener"
+        );
+
+
+        form.reset();
+
+        await refreshTimes();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        statusEl.textContent =
+            "Não foi possível registrar o agendamento. " +
+            "Verifique a configuração do Firebase e tente novamente.";
+
+    } finally {
+
+        submitBtn.disabled = false;
+
+        submitBtn.textContent =
+            "Verificar disponibilidade e solicitar";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
